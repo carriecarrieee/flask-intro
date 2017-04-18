@@ -18,7 +18,7 @@ AWESOMENESS = [
 def start_here():
     """Home page."""
 
-    return "<!doctype html><html>Hi! This is the home page.</html>"
+    return "<!doctype html><html>Hi! This is the home page. <a href=\"http://localhost:5000/hello\">Click here!</a></html>"
 
 
 @app.route('/hello')
@@ -33,8 +33,11 @@ def say_hello():
       </head>
       <body>
         <h1>Hi There!</h1>
-        <form action="/greet">
-          What's your name? <input type="text" name="person">
+        <form action="/greet" method="GET">
+          What's your name? <input type="text" name="person"><br>
+          May I compliment you? Pick one!
+          <input type="radio" name="compliment" value="marvelous">Marvelous
+          <input type="radio" name="compliment" value="supercalicodesexy">Supercalicodesexy
           <input type="submit" value="Submit">
         </form>
       </body>
@@ -48,7 +51,7 @@ def greet_person():
 
     player = request.args.get("person")
 
-    compliment = choice(AWESOMENESS)
+    compliment = request.args.get("compliment")
 
     return """
     <!doctype html>
@@ -66,4 +69,6 @@ def greet_person():
 if __name__ == '__main__':
     # debug=True gives us error messages in the browser and also "reloads"
     # our web app if we change the code.
-    app.run(debug=True)
+    app.run(debug=True, port=5001)
+
+# We broke it and Dennis cannot fix it. It's alright. Go to lunch.
